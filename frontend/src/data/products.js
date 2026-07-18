@@ -1,0 +1,86 @@
+export const PRODUCTS = [
+  {
+    id: 1,
+    name: "Classic Wool Overcoat",
+    price: 289,
+    oldPrice: 349,
+    category: "Outerwear",
+    image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800",
+    badge: "Bestseller",
+  },
+  {
+    id: 2,
+    name: "Silk Blend Shirt",
+    price: 129,
+    category: "Shirts",
+    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800",
+    badge: "New",
+  },
+  {
+    id: 3,
+    name: "Leather Chelsea Boots",
+    price: 219,
+    category: "Footwear",
+    image: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800",
+  },
+  {
+    id: 4,
+    name: "Cashmere Sweater",
+    price: 199,
+    oldPrice: 249,
+    category: "Knitwear",
+    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800",
+    badge: "Sale",
+  },
+  {
+    id: 5,
+    name: "Tailored Trousers",
+    price: 159,
+    category: "Bottoms",
+    image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800",
+  },
+  {
+    id: 6,
+    name: "Minimalist Watch",
+    price: 349,
+    category: "Accessories",
+    image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=800",
+    badge: "Premium",
+  },
+  {
+    id: 7,
+    name: "Structured Handbag",
+    price: 279,
+    category: "Bags",
+    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800",
+  },
+  {
+    id: 8,
+    name: "Linen Blazer",
+    price: 229,
+    category: "Outerwear",
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800",
+    badge: "New",
+  },
+];
+
+export const CATEGORIES = [
+  {
+    name: "Women",
+    tagline: "New Season",
+    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800",
+    href: "/shop?cat=women",
+  },
+  {
+    name: "Men",
+    tagline: "Refined Essentials",
+    image: "https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=800",
+    href: "/shop?cat=men",
+  },
+  {
+    name: "Accessories",
+    tagline: "Finishing Touches",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
+    href: "/shop?cat=accessories",
+  },
+];
