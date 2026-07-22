@@ -62,6 +62,44 @@ export const PRODUCTS = [
     image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800",
     badge: "New",
   },
+  {
+    id: 9,
+    name: "Slim Fit Denim",
+    price: 139,
+    oldPrice: 179,
+    category: "Bottoms",
+    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800",
+    badge: "Sale",
+  },
+  {
+    id: 10,
+    name: "Oxford Cotton Shirt",
+    price: 99,
+    category: "Shirts",
+    image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800",
+  },
+  {
+    id: 11,
+    name: "Leather Card Holder",
+    price: 89,
+    category: "Accessories",
+    image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=800",
+  },
+  {
+    id: 12,
+    name: "Trench Coat",
+    price: 419,
+    category: "Outerwear",
+    image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=800",
+    badge: "Bestseller",
+  },
+  {
+    id: 13,
+    name: "Cotton Polo Shirt",
+    price: 89,
+    category: "Shirts",
+    image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=800",
+  },
 ];
 
 export const CATEGORIES = [

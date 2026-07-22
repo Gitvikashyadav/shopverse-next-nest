@@ -5,8 +5,10 @@ import Link from "next/link";
 import AuthShell from "@/components/auth/AuthShell";
 import SocialButtons from "@/components/auth/SocialButtons";
 import PasswordInput from "@/components/auth/PasswordInput";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
+  
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -20,13 +22,17 @@ export default function LoginPage() {
     setLoading(true);
     try {
       // TODO: replace with your backend API call
-      // const res = await fetch("/api/auth/login", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(form),
-      // });
-      // if (!res.ok) throw new Error("Invalid credentials");
+      const res = await fetch("http://localhost:5000/api/v1/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Invalid credentials");
+      //main perpos wait 8 second
       await new Promise((r) => setTimeout(r, 800));
+      toast.success("Login successfully!");
+      console.log("resopne out put ",res);
+      
       console.log("Login payload:", form);
     } catch (err) {
       setError(err.message || "Something went wrong");
