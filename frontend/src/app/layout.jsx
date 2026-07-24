@@ -3,6 +3,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Announcement from "@/components/layout/Announcement";
 import { Toaster } from "react-hot-toast";
+import { WishlistProvider } from "@/context/WishlistContext";
+import { CartProvider } from "@/context/CartContext";
 export const metadata = {
   title: "LUXE — Premium Fashion & Lifestyle",
   description: "Curated premium fashion, accessories and lifestyle essentials.",
@@ -19,8 +21,10 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
+      
       <body className="min-h-screen flex flex-col">
-        
+        <WishlistProvider>
+          <CartProvider>
         <Toaster
           position="top-right"
           toastOptions={{
@@ -30,7 +34,9 @@ export default function RootLayout({ children }) {
         <Announcement />
         <Header />
         <main className="flex-1">{children}</main>
+        </CartProvider>
         <Footer />
+        </WishlistProvider>
       </body>
     </html>
   );

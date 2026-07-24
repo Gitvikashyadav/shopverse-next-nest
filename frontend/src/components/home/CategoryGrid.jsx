@@ -15,7 +15,10 @@ export default function CategoryGrid() {
           <p className="text-xs tracking-[0.3em] uppercase text-[var(--gold)] font-semibold">Explore</p>
           <h2 className="mt-2 font-display text-3xl md:text-5xl font-bold">Shop by Category</h2>
         </div>
-        <Link href="/category/all" className="hidden md:inline text-sm font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] underline underline-offset-4">
+        <Link
+          href="/shop"
+          className="hidden md:inline text-sm font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] underline underline-offset-4"
+        >
           View all
         </Link>
       </div>
