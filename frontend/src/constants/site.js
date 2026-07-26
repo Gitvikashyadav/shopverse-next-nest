@@ -1,11 +1,14 @@
 export const SITE_NAME = "LUXE";
 
 export const NAV_LINKS = [
+  { label: "Wishlist", href: "/shop/wishlist" },
+
   { label: "Women", href: "/category/women" },
   { label: "Men", href: "/category/men" },
   { label: "Accessories", href: "/category/accessories" },
   { label: "New Arrivals", href: "/category/new" },
   { label: "Sale", href: "/category/sale" },
+
 ];
 
 export const FOOTER_LINKS = {

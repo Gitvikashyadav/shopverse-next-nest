@@ -48,7 +48,7 @@ export default function LoginPage() {
       footer={
         <>
           New to LUXE?{" "}
-          <Link href="/signup" className="font-medium text-neutral-900 underline underline-offset-4">
+          <Link href="/auth/signup" className="font-medium text-neutral-900 underline underline-offset-4">
             Create an account
           </Link>
         </>

@@ -516,7 +516,7 @@ export default function Header() {
               </button>
 
               <Link
-                href="/login"
+                href="/auth/login"
                 className="sm:hidden p-2"
                 aria-label="Account"
               >
@@ -583,7 +583,11 @@ export default function Header() {
               </span>
             </Link> */}
             {/* // on the bag icon: */}
-            <Link href="/shop/cart" className="relative p-2 hover:text-[var(--gold)] transition-colors" aria-label="Cart">
+            <Link
+              href="/shop/cart"
+              className="relative p-2 hover:text-[var(--gold)] transition-colors"
+              aria-label="Cart"
+            >
               <ShoppingBag size={20} />
               {cartCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-[var(--gold)] text-white text-[10px] font-bold flex items-center justify-center">
@@ -617,7 +621,7 @@ export default function Header() {
               <button
                 onClick={closeDrawer}
                 aria-label="Close menu"
-                className="p-2 -mr-2 text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors"
+                className="p-1.5 rounded-full text-[var(--ink-soft)] hover:text-white hover:bg-[var(--ink)] transition-colors duration-200"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -645,7 +649,7 @@ export default function Header() {
 
             <div className="px-6 py-6 border-t border-[var(--border)] shrink-0 space-y-3">
               <Link
-                href="/login"
+                href="/auth/login"
                 onClick={closeDrawer}
                 className="block w-full text-center py-3 text-sm font-semibold tracking-wide bg-[var(--ink)] text-white hover:bg-[var(--gold-dark)] transition-colors duration-300"
               >
@@ -653,7 +657,7 @@ export default function Header() {
               </Link>
               <div className="flex items-center justify-center gap-6 pt-2 text-xs tracking-wide text-[var(--ink-soft)]">
                 <Link
-                  href="/wishlist"
+                  href="/shop/wishlist"
                   onClick={closeDrawer}
                   className="hover:text-[var(--gold-dark)] transition-colors"
                 >

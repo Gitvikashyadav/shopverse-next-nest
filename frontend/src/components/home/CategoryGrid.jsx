@@ -17,7 +17,7 @@ export default function CategoryGrid() {
         </div>
         <Link
           href="/shop"
-          className="hidden md:inline text-sm font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] underline underline-offset-4"
+          className=" md:inline text-sm font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] underline underline-offset-4"
         >
           View all
         </Link>
