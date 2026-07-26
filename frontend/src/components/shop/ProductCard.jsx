@@ -160,16 +160,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingBag, Eye } from "lucide-react";
+import { Heart, ShoppingBag, Eye,Check } from "lucide-react";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
 
 export default function ProductCard({ product }) {
   const { toggleWishlist, isWishlisted } = useWishlist();
-  const { addToCart } = useCart();
+  const { addToCart, isInCart } = useCart();
 
- const inWishlist = isWishlisted(product.id);
-
+  const inWishlist = isWishlisted(product.id);
+  const inCart = isInCart(product.id);
   const handleWishlistClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -177,18 +177,20 @@ export default function ProductCard({ product }) {
   };
 
   const handleAddToCart = (e) => {
-
     e.preventDefault();
     e.stopPropagation();
     console.log("Call Add to cart handle functionn");
-    
+    if (inCart) return;
     addToCart(product);
   };
 
   return (
     <div className="group relative bg-[var(--surface)] border border-[var(--border)] rounded-lg overflow-hidden transition-all hover:shadow-lg">
       {/* Image */}
-      <Link href={`/product/${product.id}`} className="block relative aspect-[3/4] overflow-hidden">
+      <Link
+        href={`/product/${product.id}`}
+        className="block relative aspect-[3/4] overflow-hidden"
+      >
         <img
           src={product.image}
           alt={product.name}
@@ -218,13 +220,32 @@ export default function ProductCard({ product }) {
             <Heart size={16} fill={inWishlist ? "currentColor" : "none"} />
           </button>
 
-          <button
+          {/* <button
+            onClick={handleAddToCart}
+            className="w-9 h-9 rounded-full bg-white text-[var(--text-primary)] hover:bg-[var(--gold)] hover:text-white flex items-center justify-center transition-colors"
+            aria-label="Add to cart"
+          >
+            <ShoppingBag size={16} />
+          </button> */}
+          {inCart ? (
+            <Link
+              href="/cart"
+              onClick={(e) => e.stopPropagation()}
+              className="w-9 h-9 rounded-full bg-[var(--gold)] text-white flex items-center justify-center"
+              aria-label="In bag — view bag"
+              title="Already in bag"
+            >
+              <Check size={16} />
+            </Link>
+          ) : (
+            <button
             onClick={handleAddToCart}
             className="w-9 h-9 rounded-full bg-white text-[var(--text-primary)] hover:bg-[var(--gold)] hover:text-white flex items-center justify-center transition-colors"
             aria-label="Add to cart"
           >
             <ShoppingBag size={16} />
           </button>
+          )}
 
           <Link
             href={`/product/${product.id}`}
