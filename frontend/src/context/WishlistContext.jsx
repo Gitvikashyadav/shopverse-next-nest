@@ -7,6 +7,8 @@ const STORAGE_KEY = "wishlist_v1";
 export function WishlistProvider({ children }) {
   const [items, setItems] = useState([]);   // array of full product objects
   const [ready, setReady] = useState(false);
+  
+  
 
   // Load from localStorage once on mount
   useEffect(() => {

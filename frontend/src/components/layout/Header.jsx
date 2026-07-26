@@ -419,9 +419,19 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { Search, User, Heart, ShoppingBag, Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import {
+  Search,
+  User,
+  Heart,
+  ShoppingBag,
+  Menu,
+  X,
+  ChevronDown,
+  ChevronRight,
+} from "lucide-react";
 import { NAV_LINKS, SITE_NAME } from "@/constants/site";
 import { useWishlist } from "@/context/WishlistContext"; // ⭐ NEW
+import { useCart } from "@/context/CartContext";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -429,8 +439,9 @@ export default function Header() {
   const [accountOpen, setAccountOpen] = useState(false);
   const accountRef = useRef(null);
 
-  const { items: wishlistItems } = useWishlist();       // ⭐ NEW
-  const wishlistCount = wishlistItems?.length || 0;      // ⭐ NEW
+  const { items: wishlistItems } = useWishlist(); // ⭐ NEW
+  const wishlistCount = wishlistItems?.length || 0; // ⭐ NEW
+  const { count: cartCount } = useCart();
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -456,10 +467,17 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="h-16 md:h-20 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <button className="md:hidden p-2 -ml-2" onClick={openDrawer} aria-label="Open menu">
+            <button
+              className="md:hidden p-2 -ml-2"
+              onClick={openDrawer}
+              aria-label="Open menu"
+            >
               <Menu className="h-6 w-6" />
             </button>
-            <Link href="/" className="font-display text-2xl md:text-3xl font-bold tracking-tight">
+            <Link
+              href="/"
+              className="font-display text-2xl md:text-3xl font-bold tracking-tight"
+            >
               {SITE_NAME}
               <span className="text-[var(--gold)]">.</span>
             </Link>
@@ -479,10 +497,12 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-1 md:gap-2">
-            <button className="p-2 hover:text-[var(--gold)] transition-colors" aria-label="Search">
+            <button
+              className="p-2 hover:text-[var(--gold)] transition-colors"
+              aria-label="Search"
+            >
               <Search className="h-5 w-5" />
             </button>
-
             <div className="relative" ref={accountRef}>
               <button
                 onClick={() => setAccountOpen((v) => !v)}
@@ -490,10 +510,16 @@ export default function Header() {
               >
                 <User className="h-4 w-4" />
                 <span>Account</span>
-                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${accountOpen ? "rotate-180" : ""}`} />
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform ${accountOpen ? "rotate-180" : ""}`}
+                />
               </button>
 
-              <Link href="/login" className="sm:hidden p-2" aria-label="Account">
+              <Link
+                href="/login"
+                className="sm:hidden p-2"
+                aria-label="Account"
+              >
                 <User className="h-5 w-5" />
               </Link>
 
@@ -501,28 +527,48 @@ export default function Header() {
                 <div className="absolute right-0 mt-2 w-56 bg-white border border-[var(--border)] rounded-xl shadow-xl overflow-hidden z-50">
                   <div className="p-4 border-b border-[var(--border)]">
                     <p className="text-sm text-[var(--ink-soft)]">Welcome</p>
-                    <p className="text-base font-semibold">Sign in to your account</p>
+                    <p className="text-base font-semibold">
+                      Sign in to your account
+                    </p>
                   </div>
                   <div className="p-2">
-                    <Link href="/auth/login" className="block px-3 py-2.5 rounded-lg text-sm font-medium bg-[var(--ink)] text-white text-center hover:bg-black transition">
+                    <Link
+                      href="/auth/login"
+                      className="block px-3 py-2.5 rounded-lg text-sm font-medium bg-[var(--ink)] text-white text-center hover:bg-black transition"
+                    >
                       Log in
                     </Link>
-                    <Link href="/auth/signup" className="block mt-2 px-3 py-2.5 rounded-lg text-sm font-medium text-center border border-[var(--border)] hover:border-[var(--ink)] transition">
+                    <Link
+                      href="/auth/signup"
+                      className="block mt-2 px-3 py-2.5 rounded-lg text-sm font-medium text-center border border-[var(--border)] hover:border-[var(--ink)] transition"
+                    >
                       Create account
                     </Link>
                   </div>
                   <div className="border-t border-[var(--border)] p-2">
-                    <Link href="/account" className="block px-3 py-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)]">My Orders</Link>
-                    <Link href="/wishlist" className="block px-3 py-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)]">
-                      Wishlist {wishlistCount > 0 && `(${wishlistCount})`}   {/* ⭐ NEW */}
+                    <Link
+                      href="/account"
+                      className="block px-3 py-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)]"
+                    >
+                      My Orders
+                    </Link>
+                    <Link
+                      href="/wishlist"
+                      className="block px-3 py-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)]"
+                    >
+                      Wishlist {wishlistCount > 0 && `(${wishlistCount})`}{" "}
+                      {/* ⭐ NEW */}
                     </Link>
                   </div>
                 </div>
               )}
             </div>
-
             {/* ⭐ NEW: wishlist heart with badge */}
-            <Link href="/shop/wishlist" className="hidden sm:inline-flex relative p-2 hover:text-[var(--gold)] transition-colors" aria-label="Wishlist">
+            <Link
+              href="/shop/wishlist"
+              className="hidden sm:inline-flex relative p-2 hover:text-[var(--gold)] transition-colors"
+              aria-label="Wishlist"
+            >
               <Heart className="h-5 w-5" />
               {wishlistCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-[var(--gold)] text-white text-[10px] font-bold flex items-center justify-center">
@@ -530,12 +576,20 @@ export default function Header() {
                 </span>
               )}
             </Link>
-
-            <Link href="/cart" className="relative p-2 hover:text-[var(--gold)] transition-colors" aria-label="Cart">
+            {/* <Link href="/cart" className="relative p-2 hover:text-[var(--gold)] transition-colors" aria-label="Cart">
               <ShoppingBag className="h-5 w-5" />
               <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-[var(--gold)] text-white text-[10px] font-bold flex items-center justify-center">
                 0
               </span>
+            </Link> */}
+            {/* // on the bag icon: */}
+            <Link href="/shop/cart" className="relative p-2 hover:text-[var(--gold)] transition-colors" aria-label="Cart">
+              <ShoppingBag size={20} />
+              {cartCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-[var(--gold)] text-white text-[10px] font-bold flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Link>
           </div>
         </div>
@@ -557,9 +611,14 @@ export default function Header() {
           >
             <div className="flex items-center justify-between px-6 h-20 border-b border-[var(--border)] shrink-0">
               <span className="font-display text-2xl font-bold tracking-tight">
-                {SITE_NAME}<span className="text-[var(--gold)]">.</span>
+                {SITE_NAME}
+                <span className="text-[var(--gold)]">.</span>
               </span>
-              <button onClick={closeDrawer} aria-label="Close menu" className="p-2 -mr-2 text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors">
+              <button
+                onClick={closeDrawer}
+                aria-label="Close menu"
+                className="p-2 -mr-2 text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -567,7 +626,10 @@ export default function Header() {
             <nav className="flex-1 overflow-y-auto px-6 py-6">
               <ul className="space-y-0.5">
                 {NAV_LINKS.map((l) => (
-                  <li key={l.href} className="border-b border-[var(--border)]/60 last:border-0">
+                  <li
+                    key={l.href}
+                    className="border-b border-[var(--border)]/60 last:border-0"
+                  >
                     <Link
                       href={l.href}
                       onClick={closeDrawer}
@@ -590,11 +652,22 @@ export default function Header() {
                 LOG IN
               </Link>
               <div className="flex items-center justify-center gap-6 pt-2 text-xs tracking-wide text-[var(--ink-soft)]">
-                <Link href="/wishlist" onClick={closeDrawer} className="hover:text-[var(--gold-dark)] transition-colors">
-                  WISHLIST {wishlistCount > 0 && `(${wishlistCount})`}   {/* ⭐ NEW */}
+                <Link
+                  href="/wishlist"
+                  onClick={closeDrawer}
+                  className="hover:text-[var(--gold-dark)] transition-colors"
+                >
+                  WISHLIST {wishlistCount > 0 && `(${wishlistCount})`}{" "}
+                  {/* ⭐ NEW */}
                 </Link>
                 <span className="text-[var(--border)]">|</span>
-                <Link href="/account" onClick={closeDrawer} className="hover:text-[var(--gold-dark)] transition-colors">MY ORDERS</Link>
+                <Link
+                  href="/account"
+                  onClick={closeDrawer}
+                  className="hover:text-[var(--gold-dark)] transition-colors"
+                >
+                  MY ORDERS
+                </Link>
               </div>
             </div>
           </aside>
