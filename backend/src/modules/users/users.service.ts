@@ -14,7 +14,7 @@ export class UsersService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
-
+// : Promise<UserDocument>this tells the return type function return user details tells TypeScript that once this async function resolves, it will return the full user document — your custom fields (name, email, role) plus MongoDB-generated fields like _id, createdAt, updatedAt
   async create(createUserDto: CreateUserDto): Promise<UserDocument> {
     const existingUser = await this.findByEmail(createUserDto.email);
     if (existingUser) {

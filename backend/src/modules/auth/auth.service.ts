@@ -13,7 +13,17 @@ export class AuthService {
 
   async register(registerDto: RegisterDto) {
     const user = await this.usersService.create(registerDto);
-    return this.generateToken(user._id.toString(), user.email, user.role);
+
+    const accessToken = this.generateToken(
+      user._id.toString(),
+      user.email,
+      user.role,
+    );
+
+    return {
+      accessToken, // ✅ matches AuthPayload
+      user,
+    };
   }
 
   async validateUser(email: string, password: string) {
@@ -32,9 +42,6 @@ export class AuthService {
 
   private generateToken(userId: string, email: string, role: string) {
     const payload = { sub: userId, email, role };
-    return {
-      access_token: this.jwtService.sign(payload),
-      user: { id: userId, email, role },
-    };
+    return this.jwtService.sign(payload);
   }
 }

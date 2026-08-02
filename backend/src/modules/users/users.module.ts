@@ -7,7 +7,7 @@ import { User, UserSchema } from './entities/user.entity';
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
-  providers: [UsersService],
-  exports: [UsersService],
+  providers: [UsersService],// exists ONLY inside UsersModule by default
+  exports: [UsersService],//<-- this makes it AVAILABLE to other modules too
 })
 export class UsersModule {}

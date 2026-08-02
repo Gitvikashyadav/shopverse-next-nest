@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
+import { AuthResolver } from './auth.resolver';
 
 @Module({
   imports: [
@@ -15,14 +16,17 @@ import { LocalStrategy } from './strategies/local.strategy';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get('jwt.secret'),
-        signOptions: { expiresIn: configService.get('jwt.expiresIn') },
-      }),
+      useFactory: (configService: ConfigService) => {
+  console.log('JWT SECRET:', configService.get('jwt.secret')); // ← check this prints a real value
+  return {
+    secret: configService.get('jwt.secret'),
+    signOptions: { expiresIn: configService.get('jwt.expiresIn') },
+  };
+},
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, LocalStrategy],
+  providers: [AuthService, JwtStrategy, LocalStrategy,AuthResolver],
   exports: [AuthService],
 })
 export class AuthModule {}

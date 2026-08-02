@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { GqlExceptionFilter, GqlArgumentsHost } from '@nestjs/graphql';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -22,12 +23,20 @@ export class HttpExceptionFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getResponse()
         : 'Internal server error';
+    if (host.getType() === 'http') {
+      
+      response.status(status).json({
+        success: false,
+        statusCode: status,
+        message,
+        timestamp: new Date().toISOString(),
+      });
+      return;
+    }
 
-    response.status(status).json({
-      success: false,
-      statusCode: status,
-      message,
-      timestamp: new Date().toISOString(),
-    });
+   // GraphQL path — just throw; Apollo formats this into the errors[] array itself
+    throw exception instanceof HttpException
+      ? exception
+      : new HttpException(message, status);
   }
 }

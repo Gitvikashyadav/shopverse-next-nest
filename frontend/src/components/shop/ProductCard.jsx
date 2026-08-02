@@ -157,7 +157,7 @@
 
 // src/components/shop/ProductCard.jsx
 "use client";
-
+import { slugify } from "@/lib/slugify";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingBag, Eye,Check } from "lucide-react";
@@ -188,7 +188,7 @@ export default function ProductCard({ product }) {
     <div className="group relative bg-[var(--surface)] border border-[var(--border)] rounded-lg overflow-hidden transition-all hover:shadow-lg">
       {/* Image */}
       <Link
-        href={`/product/${product.id}`}
+        href={`/shop/product/${product.slug || slugify(product.name)}`}
         className="block relative aspect-[3/4] overflow-hidden"
       >
         <img
@@ -207,7 +207,8 @@ export default function ProductCard({ product }) {
         )}
 
         {/* Hover actions */}
-        <div className="absolute right-3 top-3 flex flex-col gap-2 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+        {/* <div className="absolute right-3 top-3 flex flex-col gap-2 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"> */}
+        <div className="absolute right-3 top-3 flex flex-col gap-2 opacity-100 translate-x-0 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:translate-x-2 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:translate-x-0 transition-all duration-300">
           <button
             onClick={handleWishlistClick}
             className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
@@ -248,7 +249,7 @@ export default function ProductCard({ product }) {
           )}
 
           <Link
-            href={`/product/${product.id}`}
+           href={`/shop/product/${product.slug || slugify(product.name)}`}
             className="w-9 h-9 rounded-full bg-white text-[var(--text-primary)] hover:bg-[var(--gold)] hover:text-white flex items-center justify-center transition-colors"
             aria-label="Quick view"
           >
@@ -262,7 +263,7 @@ export default function ProductCard({ product }) {
         <p className="text-xs text-[var(--text-muted)] uppercase tracking-wide mb-1">
           {product.category}
         </p>
-        <Link href={`/product/${product.id}`}>
+        <Link href={`/shop/product/${product.slug || slugify(product.name)}`}>
           <h3 className="font-display font-medium text-[var(--text-primary)] hover:text-[var(--gold-dark)] transition-colors line-clamp-1">
             {product.name}
           </h3>
