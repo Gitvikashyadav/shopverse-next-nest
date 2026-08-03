@@ -12,6 +12,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { PasswordResetModule } from './modules/password-reset/password-reset.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
     DatabaseModule,
     AuthModule,
     UsersModule,
+    PasswordResetModule,
   ],
   controllers: [AppController],
   providers: [AppService],

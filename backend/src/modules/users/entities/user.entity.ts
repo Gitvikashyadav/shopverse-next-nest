@@ -25,6 +25,14 @@ export class User {
   @Field()
   @Prop({ default: 'user' })
   role: string; // 'user' | 'admin'
+
+
+  // ── Password reset fields — NO @Field() on either ──
+  @Prop({ default: null })
+  resetPasswordToken: string;
+
+  @Prop({ default: null })
+  resetPasswordExpires: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
