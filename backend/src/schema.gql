@@ -14,13 +14,37 @@ type AuthPayload {
   user: User!
 }
 
+type RequestPasswordResetPayload {
+  success: Boolean!
+  message: String!
+}
+
+type VerifyResetTokenPayload {
+  valid: Boolean!
+  email: String
+  expiresAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ResetPasswordPayload {
+  success: Boolean!
+  message: String!
+}
+
 type Query {
   ping: String!
+  verifyResetToken(token: String!): VerifyResetTokenPayload!
 }
 
 type Mutation {
   signup(registerDto: RegisterDto!): AuthPayload!
   login(loginDto: LoginDto!): AuthPayload!
+  requestPasswordReset(email: String!): RequestPasswordResetPayload!
+  resetPassword(token: String!, password: String!): ResetPasswordPayload!
 }
 
 input RegisterDto {

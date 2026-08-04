@@ -16,9 +16,10 @@ export default () => ({
 
   mail: {
   host: process.env.MAIL_HOST,
-  port: parseInt(process.env.MAIL_PORT, 10) || 587,
+   port: parseInt(process.env.MAIL_PORT ?? '587', 10),
   user: process.env.MAIL_USER,
   pass: process.env.MAIL_PASS,
   from: process.env.MAIL_FROM,
 },
+frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
 });

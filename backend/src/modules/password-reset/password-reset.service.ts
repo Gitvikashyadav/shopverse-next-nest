@@ -57,7 +57,9 @@ export class PasswordResetService {
     const user = await this.userModel.findOne({
       resetPasswordToken: hashedToken,
     });
-
+    console.log("hashedToken",hashedToken);
+    console.log("!user || !user.resetPasswordExpires",!user || !user.resetPasswordExpires);
+    
     if (!user || !user.resetPasswordExpires) {
       return { valid: false };
     }
@@ -93,7 +95,7 @@ export class PasswordResetService {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
     user.resetPasswordToken = null;
-    user.resetPasswordExpires = null;
+    user.resetPasswordExpires =null;
     await user.save();
 
     return {

@@ -6,7 +6,7 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import AuthShell from "@/components/auth/AuthShell";
 import PasswordInput from "@/components/auth/PasswordInput";
-// import { verifyResetToken, resetPassword } from "@/lib/auth-api";
+ import { verifyResetToken, resetPassword } from "@/lib/auth-api";
 
 /* password strength ------------------------------------------------ */
 function scorePassword(pw) {
@@ -35,7 +35,7 @@ export default function ResetPasswordForm() {
   const router = useRouter();
   const token = params.get("token");
 
-  const [state, setState] = useState("valid"); // checking | valid | invalid | done
+  const [state, setState] = useState("checking"); // checking | valid | invalid | done
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -43,30 +43,34 @@ export default function ResetPasswordForm() {
   const [error, setError] = useState("");
 
   /* 1. verify token on mount */
-  // useEffect(() => {
-  //   if (!token) {
-  //     setState("invalid");
-  //     return;
-  //   }
-  //   let alive = true;
-  //   (async () => {
-  //     try {
-  //       const data = await verifyResetToken(token);
-  //       if (!alive) return;
-  //       if (data?.verifyResetToken?.valid) {
-  //         setEmail(data.verifyResetToken.email || "");
-  //         setState("valid");
-  //       } else {
-  //         setState("invalid");
-  //       }
-  //     } catch {
-  //       if (alive) setState("invalid");
-  //     }
-  //   })();
-  //   return () => {
-  //     alive = false;
-  //   };
-  // }, [token]);
+  
+  useEffect(() => {
+    
+
+    if (!token) {
+      
+      setState("invalid");
+      return;
+    }
+    let alive = true;
+    (async () => {
+      try {
+        const data = await verifyResetToken(token);
+        if (!alive) return;
+        if (data?.verifyResetToken?.valid) {
+          setEmail(data.verifyResetToken.email || "");
+          setState("valid");
+        } else {
+          setState("invalid");
+        }
+      } catch(err) {
+        if (alive) setState("invalid");
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [token]);
 
   const score = useMemo(() => scorePassword(pw), [pw]);
   const meter = STRENGTH[score];
@@ -87,7 +91,7 @@ export default function ResetPasswordForm() {
       if (data?.resetPassword?.success) {
         setState("done");
         toast.success("Password updated");
-        setTimeout(() => router.push("/login"), 2500);
+        setTimeout(() => router.push("/auth/login"), 8500);
       } else {
         setError(data?.resetPassword?.message || "Could not reset password.");
       }

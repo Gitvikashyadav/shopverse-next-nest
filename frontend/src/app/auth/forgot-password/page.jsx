@@ -187,7 +187,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import AuthShell from "@/components/auth/AuthShell";
-//  import { requestPasswordReset } from "@/lib/auth-api";
+  import { requestPasswordReset } from "@/lib/auth-api";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -196,6 +196,8 @@ export default function ForgotPasswordPage() {
   const [error, setError] = useState("");
 
   async function handleSubmit(e) {
+    console.log("Call thefunctio");
+    
     e.preventDefault();
     setError("");
     setLoading(true);

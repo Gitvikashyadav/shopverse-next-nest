@@ -28,11 +28,11 @@ export class User {
 
 
   // ── Password reset fields — NO @Field() on either ──
-  @Prop({ default: null })
-  resetPasswordToken: string;
+@Prop({ type: String, default: null })
+resetPasswordToken: string | null;
 
-  @Prop({ default: null })
-  resetPasswordExpires: Date;
+@Prop({ type: Date, default: null })
+resetPasswordExpires: Date | null;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

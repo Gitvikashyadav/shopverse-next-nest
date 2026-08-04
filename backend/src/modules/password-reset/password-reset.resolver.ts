@@ -14,7 +14,7 @@ export class PasswordResetResolver {
   async requestPasswordReset(@Args('email') email: string) {
     return this.passwordResetService.requestPasswordReset(email);
   }
-
+cd
   @Query(() => VerifyResetTokenPayload)
   async verifyResetToken(@Args('token') token: string) {
     return this.passwordResetService.verifyResetToken(token);

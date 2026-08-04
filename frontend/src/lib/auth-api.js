@@ -1,6 +1,8 @@
 import { gql } from "@/lib/graphql";
 
 export function requestPasswordReset(email) {
+  console.log("call the function requestPassword");
+  
   return gql(
     `mutation RequestPasswordReset($email: String!) {
        requestPasswordReset(email: $email) { success message }
