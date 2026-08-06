@@ -1,4 +1,5 @@
 "use client";
+import { slugify } from "@/lib/slugify";
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, Trash2, ShoppingBag,Check } from "lucide-react";
@@ -65,7 +66,7 @@ export default function WishlistPage() {
             className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition"
           >
             <Link
-              href={`/product/${product.id}`}
+              href={`/shop/product/${product.slug || slugify(product.name)}`}
               className="block relative aspect-[3/4] overflow-hidden"
             >
               <img

@@ -547,13 +547,13 @@ export default function Header() {
                   </div>
                   <div className="border-t border-[var(--border)] p-2">
                     <Link
-                      href="/account"
+                      href="/shop/orders"
                       className="block px-3 py-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)]"
                     >
                       My Orders
                     </Link>
                     <Link
-                      href="/wishlist"
+                      href="/shop/wishlist"
                       className="block px-3 py-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)]"
                     >
                       Wishlist {wishlistCount > 0 && `(${wishlistCount})`}{" "}
@@ -666,7 +666,7 @@ export default function Header() {
                 </Link>
                 <span className="text-[var(--border)]">|</span>
                 <Link
-                  href="/account"
+                  href="/shop/orders"
                   onClick={closeDrawer}
                   className="hover:text-[var(--gold-dark)] transition-colors"
                 >

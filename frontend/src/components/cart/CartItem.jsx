@@ -5,13 +5,12 @@ import { useCart } from "@/context/CartContext";
 
 export default function CartItem({ item }) {
   const { updateQty, removeFromCart } = useCart();
-  console.log("Cart items disply",item);
   
 
   return (
     <div className="flex gap-4 py-5 border-b border-[var(--border)]">
       <div className="relative w-24 h-32 md:w-28 md:h-36 shrink-0 overflow-hidden bg-neutral-100">
-        <img src={item.image} alt={item.name} fill className="object-cover" />
+        <Image src={item.image} alt={item.name} fill className="object-cover" />
       </div>
 
       <div className="flex-1 flex flex-col justify-between">

@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const CATS = [
-  { name: "Women", href: "/category/women", img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80" },
-  { name: "Men", href: "/category/men", img: "https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=800&q=80" },
-  { name: "Accessories", href: "/category/accessories", img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80" },
-  { name: "Footwear", href: "/category/footwear", img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=800&q=80" },
+  { name: "Women", href: "/shop?category=Women", img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80" },
+  { name: "Men", href: "/shop?category=Men",img: "https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=800&q=80" },
+  { name: "Accessories", href:"/shop?category=Accessories", img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80" },
+  { name: "Footwear", href: "/shop?category=Footwear", img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=800&q=80" },
 ];
 
 export default function CategoryGrid() {

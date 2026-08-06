@@ -21,7 +21,7 @@
 //           rel="stylesheet"
 //         />
 //       </head>
-      
+
 //       <body className="min-h-screen flex flex-col">
 //         <WishlistProvider>
 //           <CartProvider>
@@ -72,18 +72,16 @@ export default function RootLayout({ children }) {
       </head>
 
       <body>
-        
-          <Providers>
-            <Announcement />
-            <Header />
+        <Providers>
+          <Announcement />
+          <Header />
 
-            {children}
+          {children}
 
-            <Footer />
+          <Footer />
 
-            <Toaster position="top-right" />
-          </Providers>
-        
+          <Toaster position="top-right" />
+        </Providers>
       </body>
     </html>
   );

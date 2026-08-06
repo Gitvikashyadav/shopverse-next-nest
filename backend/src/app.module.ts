@@ -13,6 +13,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { PasswordResetModule } from './modules/password-reset/password-reset.module';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { PasswordResetModule } from './modules/password-reset/password-reset.mod
       driver: ApolloDriver,
       // code-first: schema is generated from your @ObjectType/@InputType classes
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      sortSchema: false,
+      sortSchema: true,
       playground: true, // set false in production, or swap for Apollo Sandbox
       // makes the raw Express req available as context.req (needed by GqlLocalAuthGuard / JwtAuthGuard)
       context: ({ req }) => ({ req }),
@@ -35,6 +36,7 @@ import { PasswordResetModule } from './modules/password-reset/password-reset.mod
     DatabaseModule,
     AuthModule,
     UsersModule,
+    ProductsModule,
     PasswordResetModule,
   ],
   controllers: [AppController],

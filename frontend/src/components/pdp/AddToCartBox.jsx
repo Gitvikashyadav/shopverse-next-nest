@@ -1,17 +1,25 @@
+
 "use client";
 import { useState } from "react";
-import { Heart, ShoppingBag, Check } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Heart, ShoppingBag, Check, Zap } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 
 const SIZES = ["XS", "S", "M", "L", "XL"];
 
 export default function AddToCartBox({ product }) {
-  const { addToCart, isInCart } = useCart();
+  const router = useRouter();
+  const { addToCart, isInCart, buyNow } = useCart();
   const { toggleWishlist, isWishlisted } = useWishlist();
   const [size, setSize] = useState("M");
   const [qty, setQty] = useState(1);
   const inCart = isInCart(product.id);
+
+  const handleOrderBook = () => {
+    buyNow({ ...product, size }, qty);
+    router.push("/shop/checkout");
+  };
 
   return (
     <div className="space-y-6">
@@ -41,17 +49,24 @@ export default function AddToCartBox({ product }) {
         <div className="flex items-center rounded-md border border-neutral-300">
           <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="px-3 py-2">−</button>
           <span className="w-10 text-center text-sm">{qty}</span>
-          <button onClick={() => setQty((q) => q + 1)} className="px-3 py-2">+</button>
+          <button onClick={() => setQty((q) => Math.min(10, q + 1))} className="px-3 py-2">+</button>
         </div>
-
-        <button onClick={() => addToCart({ ...product, size, qty })} disabled={inCart}
-          className="flex flex-1 items-center justify-center gap-2 rounded-md bg-neutral-900 py-3 text-sm font-medium text-white disabled:opacity-60">
-          {inCart ? <><Check className="h-4 w-4" /> In bag</> : <><ShoppingBag className="h-4 w-4" /> Add to bag</>}
-        </button>
 
         <button onClick={() => toggleWishlist(product)} aria-label="Wishlist"
           className="rounded-md border border-neutral-300 p-3 hover:border-neutral-900">
           <Heart className={`h-4 w-4 ${isWishlisted(product.id) ? "fill-red-500 text-red-500" : ""}`} />
+        </button>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <button onClick={() => addToCart({ ...product, size, qty })} disabled={inCart}
+          className="flex items-center justify-center gap-2 rounded-md bg-neutral-900 py-3 text-sm font-medium text-white disabled:opacity-60">
+          {inCart ? <><Check className="h-4 w-4" /> In bag</> : <><ShoppingBag className="h-4 w-4" /> Add to bag</>}
+        </button>
+
+        <button onClick={handleOrderBook}
+          className="flex items-center justify-center gap-2 rounded-md bg-orange-600 py-3 text-sm font-medium text-white hover:bg-orange-700">
+          <Zap className="h-4 w-4" /> Order Book
         </button>
       </div>
 

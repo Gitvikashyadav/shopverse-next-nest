@@ -3,20 +3,19 @@ export const SITE_NAME = "LUXE";
 export const NAV_LINKS = [
   { label: "Wishlist", href: "/shop/wishlist" },
 
-  { label: "Women", href: "/category/women" },
-  { label: "Men", href: "/category/men" },
-  { label: "Accessories", href: "/category/accessories" },
+ { label: "Women", href: "/shop?category=Women" },
+    { label: "Men", href: "/shop?category=Men" },
+    { label: "Accessories", href: "/shop?category=Accessories" },
   { label: "New Arrivals", href: "/category/new" },
   { label: "Sale", href: "/category/sale" },
-
 ];
 
 export const FOOTER_LINKS = {
   Shop: [
-    { label: "Women", href: "/category/women" },
-    { label: "Men", href: "/category/men" },
-    { label: "Accessories", href: "/category/accessories" },
-    { label: "New Arrivals", href: "/category/new" },
+    { label: "Women", href: "/shop?category=Women" },
+    { label: "Men", href: "/shop?category=Men" },
+    { label: "Accessories", href: "/shop?category=Accessories" },
+    { label: "Footwear", href: "/shop?category=Footwear" },
   ],
   Help: [
     { label: "Contact Us", href: "/contact" },

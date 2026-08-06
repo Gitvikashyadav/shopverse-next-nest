@@ -2,27 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  id: ID!
-  name: String!
-  email: String!
-  role: String!
-}
-
 type AuthPayload {
   accessToken: String!
   user: User!
 }
 
-type RequestPasswordResetPayload {
-  success: Boolean!
-  message: String!
+input CreateProductInput {
+  badge: String
+  category: String!
+  description: String!
+  image: String!
+  name: String!
+  oldPrice: Float
+  price: Float!
+  slug: String!
 }
 
-type VerifyResetTokenPayload {
-  valid: Boolean!
-  email: String
-  expiresAt: DateTime
+input CreateProductsInput {
+  products: [CreateProductInput!]!
 }
 
 """
@@ -30,30 +27,83 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type ResetPasswordPayload {
-  success: Boolean!
-  message: String!
+input LoginDto {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createProduct(createProductInput: CreateProductInput!): Product!
+  createProducts(createProductsInput: CreateProductsInput!): [Product!]!
+  deleteProduct(id: String!): Boolean!
+  login(loginDto: LoginDto!): AuthPayload!
+  requestPasswordReset(email: String!): RequestPasswordResetPayload!
+  resetPassword(password: String!, token: String!): ResetPasswordPayload!
+  signup(registerDto: RegisterDto!): AuthPayload!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+}
+
+type Product {
+  badge: String
+  category: String!
+  description: String!
+  id: ID!
+  image: String!
+  name: String!
+  oldPrice: Float
+  price: Float!
+  slug: String!
 }
 
 type Query {
   ping: String!
+  product(id: String!): Product!
+  products: [Product!]!
+  productsByCategory(category: String!): [Product!]!
+  searchProducts(searchProductsInput: SearchProductsInput!): [Product!]!
   verifyResetToken(token: String!): VerifyResetTokenPayload!
 }
 
-type Mutation {
-  signup(registerDto: RegisterDto!): AuthPayload!
-  login(loginDto: LoginDto!): AuthPayload!
-  requestPasswordReset(email: String!): RequestPasswordResetPayload!
-  resetPassword(token: String!, password: String!): ResetPasswordPayload!
-}
-
 input RegisterDto {
-  name: String!
   email: String!
+  name: String!
   password: String!
 }
 
-input LoginDto {
+type RequestPasswordResetPayload {
+  message: String!
+  success: Boolean!
+}
+
+type ResetPasswordPayload {
+  message: String!
+  success: Boolean!
+}
+
+input SearchProductsInput {
+  search: String
+}
+
+input UpdateProductInput {
+  badge: String
+  category: String
+  description: String
+  id: ID!
+  image: String
+  name: String
+  price: Float
+  slug: String
+}
+
+type User {
   email: String!
-  password: String!
+  id: ID!
+  name: String!
+  role: String!
+}
+
+type VerifyResetTokenPayload {
+  email: String
+  expiresAt: DateTime
+  valid: Boolean!
 }

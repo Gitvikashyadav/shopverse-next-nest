@@ -9,7 +9,7 @@ const SLIDES = [
     title: "Timeless Elegance,\nRedefined.",
     desc: "Discover handcrafted pieces from world-renowned ateliers.",
     cta: "Shop Women",
-    href: "/category/women",
+    href: "/shop?category=Women",
     image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1920&q=80",
   },
   {
@@ -17,7 +17,7 @@ const SLIDES = [
     title: "Modern Tailoring\nFor Modern Icons.",
     desc: "Precision cuts and premium fabrics for the contemporary gentleman.",
     cta: "Shop Men",
-    href: "/category/men",
+    href: "/shop?category=Men",
     image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1920&q=80",
   },
   {
@@ -25,7 +25,7 @@ const SLIDES = [
     title: "Accessories That\nDefine You.",
     desc: "From leather goods to fine jewelry, crafted to last generations.",
     cta: "Explore",
-    href: "/category/accessories",
+     href: "/shop?category=Accessories",
     image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1920&q=80",
   },
 ];
