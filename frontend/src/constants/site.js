@@ -1,4 +1,4 @@
-export const SITE_NAME = "LUXE";
+export const SITE_NAME = "BeingBesharam";
 
 export const NAV_LINKS = [
   { label: "Wishlist", href: "/shop/wishlist" },
