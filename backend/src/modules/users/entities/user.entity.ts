@@ -33,6 +33,11 @@ resetPasswordToken: string | null;
 
 @Prop({ type: Date, default: null })
 resetPasswordExpires: Date | null;
+
+@Field({ nullable: true })
+  createdAt?: Date;
 }
+
+
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -6,8 +6,8 @@ export const NAV_LINKS = [
  { label: "Women", href: "/shop?category=Women" },
     { label: "Men", href: "/shop?category=Men" },
     { label: "Accessories", href: "/shop?category=Accessories" },
-  { label: "New Arrivals", href: "/category/new" },
-  { label: "Sale", href: "/category/sale" },
+  { label: "New Arrivals", href: "/shop/new-arrivals" },
+  { label: "Sale", href: "/shop/sale" },
 ];
 
 export const FOOTER_LINKS = {

@@ -1,5 +1,5 @@
 "use client";
-import { createOrder } from "@/lib/orders";  
+import { createOrder } from "@/lib/orders";
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -13,27 +13,42 @@ import { inr } from "@/lib/format";
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { checkoutItems = [], clearCart, clearBuyNow ,isBuyNow} = useCart();
+  const { checkoutItems = [], clearCart, clearBuyNow, isBuyNow } = useCart();
 
   const [step, setStep] = useState(1);
   const [address, setAddress] = useState({});
   const [errors, setErrors] = useState({});
   const [method, setMethod] = useState("upi");
   const [loading, setLoading] = useState(false);
- console.log("Check out items product ",checkoutItems);
- 
+  console.log("Check out items product ", checkoutItems);
+
   const total =
     checkoutItems.reduce((s, i) => s + i.price * i.qty, 0) +
     (checkoutItems.reduce((s, i) => s + i.price * i.qty, 0) > 499 ? 0 : 40);
 
+  // const validate = () => {
+  //   const e = {};
+  //   if (!address.name?.trim()) e.name = "Required";
+  //   if (!/^\d{10}$/.test(address.phone || "")) e.phone = "Enter a 10-digit number";
+  //   if (!/^\d{6}$/.test(address.pincode || "")) e.pincode = "Enter a 6-digit pincode";
+  //   if (!address.city?.trim()) e.city = "Required";
+  //   if (!address.state?.trim()) e.state = "Required";
+  //   if (!address.address?.trim()) e.address = "Required";
+  //   setErrors(e);
+  //   return Object.keys(e).length === 0;
+  // };
+
   const validate = () => {
     const e = {};
     if (!address.name?.trim()) e.name = "Required";
-    if (!/^\d{10}$/.test(address.phone || "")) e.phone = "Enter a 10-digit number";
-    if (!/^\d{6}$/.test(address.pincode || "")) e.pincode = "Enter a 6-digit pincode";
+    if (!/^\d{10}$/.test(address.phone || ""))
+      e.phone = "Enter a 10-digit number";
+    if (!/^\d{6}$/.test(address.pincode || ""))
+      e.pincode = "Enter a 6-digit pincode";
     if (!address.city?.trim()) e.city = "Required";
     if (!address.state?.trim()) e.state = "Required";
     if (!address.address?.trim()) e.address = "Required";
+    // no email check at all
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -50,7 +65,7 @@ export default function CheckoutPage() {
     setLoading(false);
     if (!res.ok) return alert(res.error || "Payment failed");
 
- createOrder({
+    await createOrder({
       items: checkoutItems,
       address,
       amount: total,
@@ -58,19 +73,24 @@ export default function CheckoutPage() {
       paymentId: res.paymentId || "cod",
     });
     // Only clear the relevant source — don't wipe the whole cart on a Buy Now purchase
-  if (isBuyNow) {
-    clearBuyNow?.();
-  } else {
-    clearCart?.();
-  }
-    router.push(`/shop/checkout/success?id=${res.paymentId || "cod"}&amt=${total}`);
+    if (isBuyNow) {
+      clearBuyNow?.();
+    } else {
+      clearCart?.();
+    }
+    router.push(
+      `/shop/checkout/success?id=${res.paymentId || "cod"}&amt=${total}`,
+    );
   };
 
   if (!checkoutItems.length) {
     return (
       <div className="mx-auto max-w-md px-4 py-20 text-center">
         <h1 className="text-xl font-semibold">Nothing to check out</h1>
-        <button onClick={() => router.push("/shop")} className="mt-6 rounded-lg bg-orange-600 px-6 py-3 text-sm font-semibold text-white">
+        <button
+          onClick={() => router.push("/shop")}
+          className="mt-6 rounded-lg bg-orange-600 px-6 py-3 text-sm font-semibold text-white"
+        >
           Continue shopping
         </button>
       </div>
@@ -90,7 +110,10 @@ export default function CheckoutPage() {
                 1 · Delivery Address
               </h2>
               {step > 1 && (
-                <button onClick={() => setStep(1)} className="text-xs font-semibold uppercase text-orange-600">
+                <button
+                  onClick={() => setStep(1)}
+                  className="text-xs font-semibold uppercase text-orange-600"
+                >
                   Change
                 </button>
               )}
@@ -98,7 +121,11 @@ export default function CheckoutPage() {
 
             {step === 1 ? (
               <div className="p-5">
-                <AddressForm value={address} onChange={setAddress} errors={errors} />
+                <AddressForm
+                  value={address}
+                  onChange={setAddress}
+                  errors={errors}
+                />
                 <button
                   onClick={() => validate() && setStep(2)}
                   className="mt-5 h-11 rounded-lg bg-orange-600 px-8 text-sm font-semibold text-white hover:bg-orange-700"
@@ -108,9 +135,13 @@ export default function CheckoutPage() {
               </div>
             ) : (
               <p className="px-5 py-4 text-sm text-gray-600">
-                <span className="font-medium text-gray-900">{address.name}</span> · {address.phone}
+                <span className="font-medium text-gray-900">
+                  {address.name}
+                </span>{" "}
+                · {address.phone}
                 <br />
-                {address.address}, {address.city}, {address.state} — {address.pincode}
+                {address.address}, {address.city}, {address.state} —{" "}
+                {address.pincode}
               </p>
             )}
           </section>
@@ -126,15 +157,27 @@ export default function CheckoutPage() {
             {step >= 2 && (
               <div className="p-5">
                 {checkoutItems.map((i) => (
-                   <div key={i._id || i.slug || `${i.name}-${i.qty}-${Math.random()}`} className="flex gap-4 border-b py-3 last:border-0">
+                  <div
+                    key={
+                      i._id || i.slug || `${i.name}-${i.qty}-${Math.random()}`
+                    }
+                    className="flex gap-4 border-b py-3 last:border-0"
+                  >
                     <div className="relative h-20 w-16 shrink-0 rounded bg-gray-50">
-                      <Image src={i.image} alt={i.name} fill className="object-contain" />
+                      <Image
+                        src={i.image}
+                        alt={i.name}
+                        fill
+                        className="object-contain"
+                      />
                     </div>
                     <div className="flex-1 text-sm">
                       <p className="font-medium">{i.name}</p>
                       <p className="mt-1 text-gray-500">Qty: {i.qty}</p>
                     </div>
-                    <p className="text-sm font-semibold">{inr(i.price * i.qty)}</p>
+                    <p className="text-sm font-semibold">
+                      {inr(i.price * i.qty)}
+                    </p>
                   </div>
                 ))}
 
@@ -169,8 +212,8 @@ export default function CheckoutPage() {
                   {loading
                     ? "Processing..."
                     : method === "cod"
-                    ? `PLACE ORDER · ${inr(total)}`
-                    : `PAY ${inr(total)}`}
+                      ? `PLACE ORDER · ${inr(total)}`
+                      : `PAY ${inr(total)}`}
                 </button>
                 <p className="mt-3 text-center text-xs text-gray-400">
                   Secured payments · Razorpay

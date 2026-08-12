@@ -14,7 +14,7 @@ export class UsersService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
-// : Promise<UserDocument>this tells the return type function return user details tells TypeScript that once this async function resolves, it will return the full user document — your custom fields (name, email, role) plus MongoDB-generated fields like _id, createdAt, updatedAt
+  // : Promise<UserDocument>this tells the return type function return user details tells TypeScript that once this async function resolves, it will return the full user document — your custom fields (name, email, role) plus MongoDB-generated fields like _id, createdAt, updatedAt
   async create(createUserDto: CreateUserDto): Promise<UserDocument> {
     const existingUser = await this.findByEmail(createUserDto.email);
     if (existingUser) {
@@ -39,5 +39,21 @@ export class UsersService {
     const user = await this.userModel.findById(id).exec();
     if (!user) throw new NotFoundException('User not found');
     return user;
+  }
+
+  async findAll(
+    skip = 0,
+    take = 10,
+  ): Promise<{ users: UserDocument[]; total: number }> {
+    const [users, total] = await Promise.all([
+      this.userModel
+        .find()
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(take)
+        .exec(),
+      this.userModel.countDocuments().exec(),
+    ]);
+    return { users, total };
   }
 }

@@ -14,6 +14,9 @@ import { join } from 'path';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { PasswordResetModule } from './modules/password-reset/password-reset.module';
 import { ProductsModule } from './modules/products/products.module';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { OrdersModule } from './modules/orders/orders.module';
+import { AiModule } from './modules/ai/ai.module';
 
 @Module({
   imports: [
@@ -38,6 +41,9 @@ import { ProductsModule } from './modules/products/products.module';
     UsersModule,
     ProductsModule,
     PasswordResetModule,
+    PaymentsModule,
+    OrdersModule,
+    AiModule
   ],
   controllers: [AppController],
   providers: [AppService],

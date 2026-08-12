@@ -417,6 +417,7 @@
 // }
 
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -442,6 +443,7 @@ export default function Header() {
   const { items: wishlistItems } = useWishlist(); // ⭐ NEW
   const wishlistCount = wishlistItems?.length || 0; // ⭐ NEW
   const { count: cartCount } = useCart();
+  const { user, isAdmin, logout } = useAuth(); // ← ADD THIS LINE
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -525,13 +527,32 @@ export default function Header() {
 
               {accountOpen && (
                 <div className="absolute right-0 mt-2 w-56 bg-white border border-[var(--border)] rounded-xl shadow-xl overflow-hidden z-50">
-                  <div className="p-4 border-b border-[var(--border)]">
+                  {/* <div className="p-4 border-b border-[var(--border)]">
                     <p className="text-sm text-[var(--ink-soft)]">Welcome</p>
                     <p className="text-base font-semibold">
                       Sign in to your account
                     </p>
+                  </div> */}
+                  <div className="p-4 border-b border-[var(--border)]">
+                    {user ? (
+                      <>
+                        <p className="text-sm text-[var(--ink-soft)]">
+                          {isAdmin ? "Signed in as Admin" : "Welcome back"}
+                        </p>
+                        <p className="text-base font-semibold">{user.name}</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-sm text-[var(--ink-soft)]">
+                          Welcome
+                        </p>
+                        <p className="text-base font-semibold">
+                          Sign in to your account
+                        </p>
+                      </>
+                    )}
                   </div>
-                  <div className="p-2">
+                  {/* <div className="p-2">
                     <Link
                       href="/auth/login"
                       className="block px-3 py-2.5 rounded-lg text-sm font-medium bg-[var(--ink)] text-white text-center hover:bg-black transition"
@@ -544,8 +565,50 @@ export default function Header() {
                     >
                       Create account
                     </Link>
-                  </div>
+                  </div> */}
+                  {!user ? (
+                    <div className="p-2">
+                      <Link
+                        href="/auth/login"
+                        className="block px-3 py-2.5 rounded-lg text-sm font-medium bg-[var(--ink)] text-white text-center hover:bg-black transition"
+                      >
+                        Log in
+                      </Link>
+                      <Link
+                        href="/auth/signup"
+                        className="block mt-2 px-3 py-2.5 rounded-lg text-sm font-medium text-center border border-[var(--border)] hover:border-[var(--ink)] transition"
+                      >
+                        Create account
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="p-2">
+                      <button
+                        onClick={() => {
+                          logout();
+                          setAccountOpen(false);
+                        }}
+                        className="block w-full px-3 py-2.5 rounded-lg text-sm font-medium text-center border border-[var(--border)] hover:border-[var(--ink)] transition"
+                      >
+                        Log out
+                      </button>
+                    </div>
+                  )}
                   <div className="border-t border-[var(--border)] p-2">
+                    {/* <Link
+                      href="/shop/orders"
+                      className="block px-3 py-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)]"
+                    >
+                      My Orders
+                    </Link> */}
+                    {isAdmin && (
+                      <Link
+                        href="/admin"
+                        className="block px-3 py-2 text-sm font-semibold text-[var(--gold-dark,#9a6b1e)] hover:bg-[var(--muted)] rounded-md"
+                      >
+                        Admin Portal
+                      </Link>
+                    )}
                     <Link
                       href="/shop/orders"
                       className="block px-3 py-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)]"
@@ -648,13 +711,41 @@ export default function Header() {
             </nav>
 
             <div className="px-6 py-6 border-t border-[var(--border)] shrink-0 space-y-3">
-              <Link
+              {/* <Link
                 href="/auth/login"
                 onClick={closeDrawer}
                 className="block w-full text-center py-3 text-sm font-semibold tracking-wide bg-[var(--ink)] text-white hover:bg-[var(--gold-dark)] transition-colors duration-300"
               >
                 LOG IN
-              </Link>
+              </Link> */}
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  onClick={closeDrawer}
+                  className="block w-full text-center py-3 text-sm font-semibold tracking-wide border border-[var(--gold-dark,#9a6b1e)] text-[var(--gold-dark,#9a6b1e)] hover:bg-[var(--muted)] transition-colors duration-300"
+                >
+                  ADMIN PORTAL
+                </Link>
+              )}
+              {!user ? (
+                <Link
+                  href="/auth/login"
+                  onClick={closeDrawer}
+                  className="block w-full text-center py-3 text-sm font-semibold tracking-wide bg-[var(--ink)] text-white hover:bg-[var(--gold-dark)] transition-colors duration-300"
+                >
+                  LOG IN
+                </Link>
+              ) : (
+                <button
+                  onClick={() => {
+                    logout();
+                    closeDrawer();
+                  }}
+                  className="block w-full text-center py-3 text-sm font-semibold tracking-wide border border-[var(--border)] hover:border-[var(--ink)] transition-colors duration-300"
+                >
+                  LOG OUT
+                </button>
+              )}
               <div className="flex items-center justify-center gap-6 pt-2 text-xs tracking-wide text-[var(--ink-soft)]">
                 <Link
                   href="/shop/wishlist"

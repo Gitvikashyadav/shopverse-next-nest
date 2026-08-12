@@ -7,6 +7,17 @@ type AuthPayload {
   user: User!
 }
 
+type ConfirmDeliveryOutput {
+  error: String
+  ok: Boolean!
+  order: Order
+}
+
+input CreateOrderInput {
+  amount: Float!
+  currency: String
+}
+
 input CreateProductInput {
   badge: String
   category: String!
@@ -27,20 +38,105 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input GenerateDescriptionInput {
+  name: String!
+  price: Float!
+}
+
+type GenerateDescriptionOutput {
+  description: String!
+}
+
 input LoginDto {
   email: String!
   password: String!
 }
 
 type Mutation {
+  confirmDelivery(code: String!, orderId: String!): ConfirmDeliveryOutput!
+  createOrder(createOrderInput: PlaceOrderInput!): Order!
   createProduct(createProductInput: CreateProductInput!): Product!
   createProducts(createProductsInput: CreateProductsInput!): [Product!]!
+  createRazorpayOrder(createOrderInput: CreateOrderInput!): RazorpayOrder!
   deleteProduct(id: String!): Boolean!
+  generateDescription(generateDescriptionInput: GenerateDescriptionInput!): GenerateDescriptionOutput!
   login(loginDto: LoginDto!): AuthPayload!
   requestPasswordReset(email: String!): RequestPasswordResetPayload!
   resetPassword(password: String!, token: String!): ResetPasswordPayload!
   signup(registerDto: RegisterDto!): AuthPayload!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
+  verifyRazorpayPayment(verifyPaymentInput: VerifyPaymentInput!): VerifyPaymentOutput!
+}
+
+type Order {
+  address: OrderAddress!
+  amount: Float!
+  createdAt: DateTime
+  customerEmail: String
+  customerName: String
+  deliveredAt: DateTime
+  deliveryCode: String
+  id: ID!
+  items: [OrderItem!]!
+  method: String!
+  paymentId: String
+  status: String!
+  userId: ID
+}
+
+type OrderAddress {
+  address: String!
+  city: String!
+  name: String!
+  phone: String!
+  pincode: String!
+  state: String!
+}
+
+input OrderAddressInput {
+  address: String!
+  city: String!
+  name: String!
+  phone: String!
+  pincode: String!
+  state: String!
+}
+
+type OrderItem {
+  image: String!
+  name: String!
+  price: Float!
+  productId: String!
+  qty: Int!
+}
+
+input OrderItemInput {
+  image: String!
+  name: String!
+  price: Float!
+  productId: String!
+  qty: Int!
+}
+
+type PaginatedOrders {
+  orders: [Order!]!
+  total: Int!
+}
+
+type PaginatedUsers {
+  total: Int!
+  users: [User!]!
+}
+
+input PlaceOrderInput {
+  address: OrderAddressInput!
+  amount: Float!
+  customerEmail: String
+  customerName: String
+  items: [OrderItemInput!]!
+  method: String!
+  paymentId: String
+  userId: String
 }
 
 type Product {
@@ -56,12 +152,20 @@ type Product {
 }
 
 type Query {
+  orders(skip: Int, take: Int): PaginatedOrders!
   ping: String!
   product(id: String!): Product!
   products: [Product!]!
   productsByCategory(category: String!): [Product!]!
   searchProducts(searchProductsInput: SearchProductsInput!): [Product!]!
+  users(skip: Int, take: Int): PaginatedUsers!
   verifyResetToken(token: String!): VerifyResetTokenPayload!
+}
+
+type RazorpayOrder {
+  amount: Float!
+  currency: String!
+  id: String!
 }
 
 input RegisterDto {
@@ -91,15 +195,28 @@ input UpdateProductInput {
   id: ID!
   image: String
   name: String
+  oldPrice: Float
   price: Float
   slug: String
 }
 
 type User {
+  createdAt: DateTime
   email: String!
   id: ID!
   name: String!
   role: String!
+}
+
+input VerifyPaymentInput {
+  razorpay_order_id: String!
+  razorpay_payment_id: String!
+  razorpay_signature: String!
+}
+
+type VerifyPaymentOutput {
+  paymentId: String
+  verified: Boolean!
 }
 
 type VerifyResetTokenPayload {
