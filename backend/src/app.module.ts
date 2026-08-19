@@ -17,6 +17,7 @@ import { ProductsModule } from './modules/products/products.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { AiModule } from './modules/ai/ai.module';
+import { WhatsappModule } from './modules/whatsapp/whatsapp.module';
 
 @Module({
   imports: [
@@ -43,7 +44,8 @@ import { AiModule } from './modules/ai/ai.module';
     PasswordResetModule,
     PaymentsModule,
     OrdersModule,
-    AiModule
+    AiModule,
+    WhatsappModule
   ],
   controllers: [AppController],
   providers: [AppService],

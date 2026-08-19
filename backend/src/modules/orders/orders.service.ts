@@ -1,13 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Order, OrderDocument } from './entities/order.entity';
 import { PlaceOrderInput } from './dto/create-order.input';
-
+import { WhatsappService } from '../whatsapp/whatsapp.service';
 @Injectable()
 export class OrdersService {
+  private readonly logger = new Logger(OrdersService.name);
   constructor(
     @InjectModel(Order.name) private readonly orderModel: Model<OrderDocument>,
+    private readonly whatsappService: WhatsappService,
   ) {}
   private makeCode(): string {
     return String(Math.floor(100000 + Math.random() * 900000));
@@ -19,7 +21,23 @@ export class OrdersService {
       status: 'booked',
       deliveryCode: this.makeCode(),
     });
-    return order.save();
+    const saved = await order.save();
+    const phone = saved.address?.phone;
+   
+    
+    if (phone) {
+      this.whatsappService
+        .sendOrderConfirmation(
+          phone,
+          saved.id,
+          saved.amount,
+          saved.deliveryCode??'',
+        )
+        .catch((err) =>
+          this.logger.error('Failed to send WhatsApp message', err),
+        );
+    }
+    return saved;
   }
 
   async findAll(

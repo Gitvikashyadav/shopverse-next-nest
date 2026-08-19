@@ -17,22 +17,7 @@ export default function ProductPage({ params }) {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const { getBySlug, loaded, loadProducts } = useProducts();
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       setProduct(await api.getProduct(slug));
-  //     } catch {
-  //       const local =
-  //         JSON.parse(localStorage.getItem("admin_products") || "null") ||
-  //         PRODUCTS;
-  //       setProduct(
-  //         local.find((p) => (p.slug || slugify(p.name)) === slug) || null,
-  //       );
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   })();
-  // }, [slug]);
+  
 
   useEffect(() => {
     let cancelled = false;
