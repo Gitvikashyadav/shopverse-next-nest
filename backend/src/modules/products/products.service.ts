@@ -14,6 +14,8 @@ export class ProductsService {
   ) {}
 
   async findAll(): Promise<ProductDocument[]> {
+    console.log("requestcame");
+    
     return this.productModel.find().exec();
   }
 

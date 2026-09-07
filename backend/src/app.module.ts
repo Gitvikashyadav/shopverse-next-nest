@@ -18,6 +18,7 @@ import { PaymentsModule } from './modules/payments/payments.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { AiModule } from './modules/ai/ai.module';
 import { WhatsappModule } from './modules/whatsapp/whatsapp.module';
+import { TenantModule } from './tenant/tenant.module';
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { WhatsappModule } from './modules/whatsapp/whatsapp.module';
     PaymentsModule,
     OrdersModule,
     AiModule,
-    WhatsappModule
+    WhatsappModule,
+    TenantModule
   ],
   controllers: [AppController],
   providers: [AppService],

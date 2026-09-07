@@ -28,7 +28,9 @@ export class AuthResolver {
 
   @Mutation(() => AuthPayload)
   async signup(@Args('registerDto') registerDto: RegisterDto) {
+    console.log("signup call");
     const result = await this.authService.register(registerDto);
+    
 
     return result;
   }
