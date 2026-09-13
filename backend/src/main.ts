@@ -19,12 +19,12 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new TransformResponseInterceptor());
 
-  app.enableCors();
+  app.enableCors({ origin: process.env.FRONTEND_URL });
 
   app.setGlobalPrefix('api/v1'); // routes become /api/v1/auth/signup etc.
 
   const port = process.env.PORT || 5000;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   console.log(`🚀 Server running on http://localhost:${port}/api/v1`);
 }
 bootstrap();

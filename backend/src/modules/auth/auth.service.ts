@@ -44,4 +44,4 @@ export class AuthService {
     const payload = { sub: userId, email, role };
     return this.jwtService.sign(payload);
   }
-}
+}    
