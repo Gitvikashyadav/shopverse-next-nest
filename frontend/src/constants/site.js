@@ -3,11 +3,13 @@ export const SITE_NAME = "BeingBesharam";
 export const NAV_LINKS = [
   { label: "Wishlist", href: "/shop/wishlist" },
 
- { label: "Women", href: "/shop?category=Women" },
-    { label: "Men", href: "/shop?category=Men" },
-    { label: "Accessories", href: "/shop?category=Accessories" },
+  { label: "Women", href: "/shop?category=Women" },
+  { label: "Men", href: "/shop?category=Men" },
+  { label: "Accessories", href: "/shop?category=Accessories" },
   { label: "New Arrivals", href: "/shop/new-arrivals" },
   { label: "Sale", href: "/shop/sale" },
+  { label: "Admin", href: "/admin" },
+
 ];
 
 export const FOOTER_LINKS = {
